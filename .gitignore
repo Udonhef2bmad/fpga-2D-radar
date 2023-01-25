@@ -1,9 +1,0 @@
-# ignore all files in the "simulation/modelsim" folder, except the folder itself
-simulation/modelsim/*
-!simulation/modelsim/
-
-# ignore all files in the "simulation/wave" folder, except the folder itself
-simulation/wave/*
-!simulation/wave/
-
-
