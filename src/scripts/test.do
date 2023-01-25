@@ -1,50 +1,46 @@
-puts "Test simulation script for ModelSim "
+### User defined ###
 
-set tb_name "test_tb"
+# Define TestBench (TB)
+set TB "test_tb"
 
-# keep script path
-set script_path [ file dirname [ file normalize [ info script ] ] ]
+# Define Design Under Test (DUT), used to pick viewed signals
+set DUT "test_inst"
 
-# Define a variable to store the path to the VHDL files
-set project_path "../../../fpga-2D-radar"; 
-set work_path "simulation/work"
-set src_path $project_path/src; 
-set designs_path $src_path/designs;
-set testbenches_path $src_path/testbenches; 
-
-# Create new project
-vlib work
-
-# Change to source dir for compilation
-#cd $src_path
-
-vcom -93 $designs_path/test.vhd
-
-vcom -93 $testbenches_path/$tb_name.vhd
-
-# launch simulation
-vsim $tb_name
-
-# Define signals to plot
-# add wave * ;# Add all signals
-
-add wave -noupdate -expand -group Simulation -label CLK $tb_name/CLK
-add wave -noupdate -expand -group Simulation -label RST $tb_name/RST
-add wave -noupdate -expand -group Simulation -label ENDSIM $tb_name/ENDSIM
-
-set signal_list {a_i b_i combinatorial_o clocked_o}
-
-foreach signal $signal_list {
-    add wave -noupdate -label $signal $tb_name/$signal 
+# Define list of files to compile, path starts from designated project source folder (be wary of compilation order)
+set compile_list {
+    designs/test.vhd
+    testbenches/test_tb.vhd
 }
 
+### Script start ###
 
+puts "Test simulation script for ModelSim "
 
-#add wave -noupdate -group Constants -label address_bitwidth /tb_top/address_bitwidth
-#add wave -noupdate -expand -group Signal -label rdaddress /tb_top/rdaddress
+# Read project settings from file at project root
+set project_settings "../../project_settings.tcl"
+source $project_settings
+
+# Create new project
+vlib $modelsim_path
+
+# Compile source files
+foreach file $compile_list {
+    vcom -93 -work $modelsim_path $source_path/$file
+}
+
+# launch simulation
+vsim -lib $modelsim_path -wlf $wave_path $TB
+
+# Define signals to plot
+add wave -position end  sim:/$TB/$DUT/*
 
 # Run simulation
 run -all
 
-#cosmetic
+### Cosmetics ###
+
+# short names (remove paths)
+configure wave -signalnamewidth 1
+
+# zoom to see entire simulation
 wave zoom full

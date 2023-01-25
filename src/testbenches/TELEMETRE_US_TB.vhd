@@ -56,14 +56,14 @@ BEGIN
         -- HC SR04 sends out ultrasound
 
         --echo returns
-        wait for 8 ms; -- wait 8ms or 8*50 000 000 ticks
+        wait for 1 ms; -- wait 1ms or 50 000 000 ticks; sound wave should cover 34.3cm round trip(roughly 17cm total distance)
         echo <= '1'; -- HC SR04 signals returning echo
 
-        WAIT FOR 16 ms;
+        WAIT FOR 1 ms;
         echo <= '0'; -- HC SR04 signals echo end
 
 
-        WAIT FOR 16 ms;
+        WAIT FOR 1 ms;
         --check distance value
 
 

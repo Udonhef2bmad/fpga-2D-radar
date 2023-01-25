@@ -3,10 +3,8 @@ USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
 ENTITY TELEMETRE_US IS
     GENERIC (
-        clock_freq : Natural := 1 / 50 * 10 ** 6; -- 50MHz = 20 us/tick
-        -- v = d / t
-        -- d = v * t
-        signal_speed : Natural := 333120 -- signal speed in m/s
+        clock_freq : NATURAL := 50 * 10 ** 6; -- 50MHz = 20 us/tick
+        propagation_speed : NATURAL := 34300 -- sound propagation speed in cm/s
     );
     PORT (
         clk : IN STD_LOGIC;
@@ -25,10 +23,8 @@ ARCHITECTURE RTL OF TELEMETRE_US IS
     SIGNAL counter1 : INTEGER;
     SIGNAL counter2 : INTEGER;
 
-
-    CONSTANT dist_per_tick : Natural := clock_freq * signal_speed / 2;
-    CONSTANT trigger_delay : Natural := 500; 
-    CONSTANT cooldown_delay : Natural := 0; 
+    CONSTANT trigger_duration_ticks : NATURAL := 5 * 10 ** 2;-- trigger pin high duration in ms (10us = 500ticks@50MHz)
+    CONSTANT module_cooldown_ticks : NATURAL := 5 * 10 ** 6;-- minimal delay before module can be triggered again (100ms = 5000000ticks@50MHz)
 
 BEGIN
     PROCESS (clk, Reset_n)
@@ -43,49 +39,43 @@ BEGIN
 
             CASE State IS
                 WHEN E0 =>
-                    -- start sending trigger signal
-                    trig <= '1';
                     counter2 <= 0; --reset counter 2
                     State <= E1;
 
                 WHEN E1 =>
-                    -- send trigger signal for a certain time
-                    counter1 <= counter1 + 1; -- reset counter 1
-                    IF counter1 > 500 THEN
-                        --delay reached
-                        trig <= '0'; -- stop sending trigger signal
+                    trig <= '1'; -- start sending trigger signal
+                    counter1 <= counter1 + 1; -- count trigger duration
+
+                    IF counter1 > trigger_duration_ticks THEN --delay reached
                         State <= E2;
                     END IF;
 
                 WHEN E2 =>
-                    -- wait for echo 
-                    IF echo = '1' THEN
-                        -- echo signal received
+                    trig <= '0'; -- stop sending trigger signal
+
+                    IF echo = '1' THEN -- wait for echo high
                         counter2 <= 0;
                         State <= E3;
                     END IF;
+
                 WHEN E3 =>
-                    -- count until echo returns to low state
-                    counter2 <= counter2 + 1;
-                    IF echo = '0' THEN
-                        -- echo returned to low state, distance is known
+                    counter2 <= counter2 + 1; -- count echo duration
+                    IF echo = '0' THEN -- wait for echo low
                         State <= E4;
                     END IF;
 
-                    --IF counter2 > 50*10**6 THEN
-                    --    -- echo returned to low state, distance is known
-                    --    State <= E4;
-                    --END IF;
-
                 WHEN E4 =>
-                    -- calculate distance
-                    Dist_cm <= STD_LOGIC_VECTOR(to_unsigned(counter2 * dist_per_tick, Dist_cm'length));
+                    -- calculate distance based on counter value
+                    Dist_cm <= STD_LOGIC_VECTOR(to_unsigned(counter2 * propagation_speed / (2*clock_freq), Dist_cm'length));
                     State <= E5;
+
                 WHEN E5 =>
                     -- wait before triggering again
+                    counter1 <= 0; --reset counter 1
 
-                    -- reset counter1
-                    State <= E0;
+                    IF counter1 > module_cooldown_ticks THEN --delay reached
+                        State <= E0;
+                    END IF;
             END CASE;
         END IF;
     END PROCESS;
