@@ -43,28 +43,61 @@ BEGIN
         RST <= '0';
         ENDSIM <= '0';
         WAIT FOR 0.02 us;
-        RST <= '1'; -- reset is active low (aka device works when rst=1)
+        RST <= '1'; -- reset is active low (device works when rst=1)
 
         -- test here
 
+        echo <= '0'; --echo pin default state
 
-        -- set initial values
-        echo <= '0';
-        --trig <= '0';
+        wait until trig = '1'; -- HC SR04 waits for trigger
         WAIT FOR 10 us; -- HC SR04 takes 10 us to react
+        echo <= '1'; -- HC SR04
+        WAIT FOR 1 ms; -- wait 1ms or 50 000 000 ticks; sound wave should cover 34.3cm round trip(roughly 17cm total distance)
+        echo <= '0'; -- HC SR04 signals echo end
+        --WAIT FOR 200 ms; --cooldown
 
-        -- HC SR04 sends out ultrasound
 
-        --echo returns
-        wait for 1 ms; -- wait 1ms or 50 000 000 ticks; sound wave should cover 34.3cm round trip(roughly 17cm total distance)
-        echo <= '1'; -- HC SR04 signals returning echo
-
-        WAIT FOR 1 ms;
+        wait until trig = '1'; -- HC SR04 waits for trigger
+        WAIT FOR 10 us; -- HC SR04 takes 10 us to react
+        echo <= '1'; -- HC SR04
+        WAIT FOR 2 ms; -- wait 1ms or 50 000 000 ticks; sound wave should cover 34.3cm round trip(roughly 17cm total distance)
         echo <= '0'; -- HC SR04 signals echo end
 
 
-        WAIT FOR 1 ms;
-        --check distance value
+        wait until trig = '1'; -- HC SR04 waits for trigger
+        echo <= '0';
+        WAIT FOR 10 us; -- HC SR04 takes 10 us to react
+        echo <= '1'; -- HC SR04
+        WAIT FOR 100 ms; -- wait 1ms or 50 000 000 ticks; sound wave should cover 34.3cm round trip(roughly 17cm total distance)
+        echo <= '0'; -- HC SR04 signals echo end
+
+
+        wait until trig = '1'; -- HC SR04 waits for trigger
+        echo <= '0';
+        WAIT FOR 10 us; -- HC SR04 takes 10 us to react
+        echo <= '1'; -- HC SR04
+        WAIT FOR 101 ms; -- wait 1ms or 50 000 000 ticks; sound wave should cover 34.3cm round trip(roughly 17cm total distance)
+        echo <= '0'; -- HC SR04 signals echo end
+
+
+        wait until trig = '1'; -- HC SR04 waits for trigger
+        echo <= '0';
+        WAIT FOR 10 us; -- HC SR04 takes 10 us to react
+        echo <= '1'; -- HC SR04
+        WAIT FOR 110 ms; -- wait 1ms or 50 000 000 ticks; sound wave should cover 34.3cm round trip(roughly 17cm total distance)
+        echo <= '0'; -- HC SR04 signals echo end
+
+        wait until trig = '1'; -- HC SR04 waits for trigger
+        echo <= '0';
+        WAIT FOR 10 us; -- HC SR04 takes 10 us to react
+        echo <= '1'; -- HC SR04
+        WAIT FOR 200 ms; -- wait 1ms or 50 000 000 ticks; sound wave should cover 34.3cm round trip(roughly 17cm total distance)
+        echo <= '0'; -- HC SR04 signals echo end
+
+
+
+        WAIT FOR 10 ms; 
+
 
 
         -- simulation end (do not modify)

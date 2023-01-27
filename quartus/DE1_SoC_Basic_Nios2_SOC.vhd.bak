@@ -1,0 +1,40 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity DE1_SoC_Basic_Nios2_SOC is
+port (
+	-- Inputs
+	CLOCK_50             : in std_logic;
+	KEY                  : in std_logic_vector (3 downto 0);
+	SW                   : in std_logic_vector (9 downto 0);
+	----- ADC -------
+	ADC_CONVST          : out std_logic;
+	ADC_DIN             : in std_logic;
+	ADC_DOUT            : in std_logic;
+	ADC_SCLK            : out std_logic;
+	
+	
+	-- Outputs
+	LEDR            : out std_logic_vector (9 downto 0);
+    HEX0            : out std_logic_vector (6 downto 0);
+	HEX1            : out std_logic_vector (6 downto 0);
+	HEX2            : out std_logic_vector (6 downto 0);
+	HEX3            : out std_logic_vector (6 downto 0);
+	HEX4            : out std_logic_vector (6 downto 0);
+	HEX5            : out std_logic_vector (6 downto 0)
+	
+	);
+end entity;
+
+
+architecture struct of DE1_SoC_Basic_Nios2_SOC is
+
+
+
+begin
+	 
+    
+    
+
+end architecture;
