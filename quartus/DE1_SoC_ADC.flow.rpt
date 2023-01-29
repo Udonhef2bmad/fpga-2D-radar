@@ -1,5 +1,5 @@
 Flow report for DE1_SoC_ADC
-Fri Jan 27 01:41:17 2023
+Fri Jan 27 16:06:38 2023
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -40,19 +40,19 @@ refer to the applicable agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Flow Summary                                                                  ;
 +---------------------------------+---------------------------------------------+
-; Flow Status                     ; Successful - Fri Jan 27 01:41:01 2023       ;
+; Flow Status                     ; Successful - Fri Jan 27 16:06:06 2023       ;
 ; Quartus Prime Version           ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                   ; DE1_SoC_ADC                                 ;
-; Top-level Entity Name           ; DE1_SoC_Basic_Nios2_SOC_telemetre_us        ;
+; Top-level Entity Name           ; Nios2_telemetre_servo                       ;
 ; Family                          ; Cyclone V                                   ;
 ; Device                          ; 5CSEMA5F31C6                                ;
 ; Timing Models                   ; Final                                       ;
-; Logic utilization (in ALMs)     ; 2,209 / 32,070 ( 7 % )                      ;
-; Total registers                 ; 3544                                        ;
+; Logic utilization (in ALMs)     ; 2,245 / 32,070 ( 7 % )                      ;
+; Total registers                 ; 3592                                        ;
 ; Total pins                      ; 107 / 457 ( 23 % )                          ;
 ; Total virtual pins              ; 0                                           ;
 ; Total block memory bits         ; 1,368,512 / 4,065,280 ( 34 % )              ;
-; Total DSP Blocks                ; 5 / 87 ( 6 % )                              ;
+; Total DSP Blocks                ; 6 / 87 ( 7 % )                              ;
 ; Total HSSI RX PCSs              ; 0                                           ;
 ; Total HSSI PMA RX Deserializers ; 0                                           ;
 ; Total HSSI TX PCSs              ; 0                                           ;
@@ -67,36 +67,36 @@ refer to the applicable agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 01/27/2023 01:35:53 ;
+; Start date & time ; 01/27/2023 16:00:29 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; DE1_SoC_ADC         ;
 +-------------------+---------------------+
 
 
-+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Flow Non-Default Global Settings                                                                                                                                         ;
-+-------------------------------------+----------------------------------------------------------------+---------------+--------------------------------------+------------+
-; Assignment Name                     ; Value                                                          ; Default Value ; Entity Name                          ; Section Id ;
-+-------------------------------------+----------------------------------------------------------------+---------------+--------------------------------------+------------+
-; COMPILER_SIGNATURE_ID               ; 929348038273.167477975323416                                   ; --            ; --                                   ; --         ;
-; MAX_CORE_JUNCTION_TEMP              ; 85                                                             ; --            ; --                                   ; --         ;
-; MIN_CORE_JUNCTION_TEMP              ; 0                                                              ; --            ; --                                   ; --         ;
-; MISC_FILE                           ; DE1_SoC_QSYS/synthesis/../DE1_SoC_QSYS.cmp                     ; --            ; --                                   ; --         ;
-; MISC_FILE                           ; DE1_SoC_QSYS/synthesis/../../DE1_SoC_QSYS.qsys                 ; --            ; --                                   ; --         ;
-; NUM_PARALLEL_PROCESSORS             ; All                                                            ; --            ; --                                   ; --         ;
-; PARTITION_COLOR                     ; -- (Not supported for targeted family)                         ; --            ; DE1_SoC_Basic_Nios2_SOC_telemetre_us ; Top        ;
-; PARTITION_FITTER_PRESERVATION_LEVEL ; -- (Not supported for targeted family)                         ; --            ; DE1_SoC_Basic_Nios2_SOC_telemetre_us ; Top        ;
-; PARTITION_NETLIST_TYPE              ; -- (Not supported for targeted family)                         ; --            ; DE1_SoC_Basic_Nios2_SOC_telemetre_us ; Top        ;
-; POWER_BOARD_THERMAL_MODEL           ; None (CONSERVATIVE)                                            ; --            ; --                                   ; --         ;
-; POWER_PRESET_COOLING_SOLUTION       ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW                          ; --            ; --                                   ; --         ;
-; SLD_FILE                            ; DE1_SoC_QSYS/synthesis/DE1_SoC_QSYS.regmap                     ; --            ; --                                   ; --         ;
-; SLD_FILE                            ; DE1_SoC_QSYS/synthesis/DE1_SoC_QSYS.debuginfo                  ; --            ; --                                   ; --         ;
-; SLD_INFO                            ; QSYS_NAME DE1_SoC_QSYS HAS_SOPCINFO 1 GENERATION_ID 1674779236 ; --            ; DE1_SoC_QSYS                         ; --         ;
-; SMART_RECOMPILE                     ; On                                                             ; Off           ; --                                   ; --         ;
-; SOPCINFO_FILE                       ; DE1_SoC_QSYS/synthesis/../../DE1_SoC_QSYS.sopcinfo             ; --            ; --                                   ; --         ;
-; SYNTHESIS_ONLY_QIP                  ; On                                                             ; --            ; --                                   ; --         ;
-; TOP_LEVEL_ENTITY                    ; DE1_SoC_Basic_Nios2_SOC_telemetre_us                           ; DE1_SoC_ADC   ; --                                   ; --         ;
-+-------------------------------------+----------------------------------------------------------------+---------------+--------------------------------------+------------+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Flow Non-Default Global Settings                                                                                                                          ;
++-------------------------------------+----------------------------------------------------------------+---------------+-----------------------+------------+
+; Assignment Name                     ; Value                                                          ; Default Value ; Entity Name           ; Section Id ;
++-------------------------------------+----------------------------------------------------------------+---------------+-----------------------+------------+
+; COMPILER_SIGNATURE_ID               ; 53164087300670.167483162919180                                 ; --            ; --                    ; --         ;
+; MAX_CORE_JUNCTION_TEMP              ; 85                                                             ; --            ; --                    ; --         ;
+; MIN_CORE_JUNCTION_TEMP              ; 0                                                              ; --            ; --                    ; --         ;
+; MISC_FILE                           ; DE1_SoC_QSYS/synthesis/../DE1_SoC_QSYS.cmp                     ; --            ; --                    ; --         ;
+; MISC_FILE                           ; DE1_SoC_QSYS/synthesis/../../DE1_SoC_QSYS.qsys                 ; --            ; --                    ; --         ;
+; NUM_PARALLEL_PROCESSORS             ; All                                                            ; --            ; --                    ; --         ;
+; PARTITION_COLOR                     ; -- (Not supported for targeted family)                         ; --            ; Nios2_telemetre_servo ; Top        ;
+; PARTITION_FITTER_PRESERVATION_LEVEL ; -- (Not supported for targeted family)                         ; --            ; Nios2_telemetre_servo ; Top        ;
+; PARTITION_NETLIST_TYPE              ; -- (Not supported for targeted family)                         ; --            ; Nios2_telemetre_servo ; Top        ;
+; POWER_BOARD_THERMAL_MODEL           ; None (CONSERVATIVE)                                            ; --            ; --                    ; --         ;
+; POWER_PRESET_COOLING_SOLUTION       ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW                          ; --            ; --                    ; --         ;
+; SLD_FILE                            ; DE1_SoC_QSYS/synthesis/DE1_SoC_QSYS.regmap                     ; --            ; --                    ; --         ;
+; SLD_FILE                            ; DE1_SoC_QSYS/synthesis/DE1_SoC_QSYS.debuginfo                  ; --            ; --                    ; --         ;
+; SLD_INFO                            ; QSYS_NAME DE1_SoC_QSYS HAS_SOPCINFO 1 GENERATION_ID 1674831435 ; --            ; DE1_SoC_QSYS          ; --         ;
+; SMART_RECOMPILE                     ; On                                                             ; Off           ; --                    ; --         ;
+; SOPCINFO_FILE                       ; DE1_SoC_QSYS/synthesis/../../DE1_SoC_QSYS.sopcinfo             ; --            ; --                    ; --         ;
+; SYNTHESIS_ONLY_QIP                  ; On                                                             ; --            ; --                    ; --         ;
+; TOP_LEVEL_ENTITY                    ; Nios2_telemetre_servo                                          ; DE1_SoC_ADC   ; --                    ; --         ;
++-------------------------------------+----------------------------------------------------------------+---------------+-----------------------+------------+
 
 
 +--------------------------------------------------------------------------------------------------------------------------+
@@ -104,11 +104,11 @@ refer to the applicable agreement for further details.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:01:03     ; 1.0                     ; 5131 MB             ; 00:00:42                           ;
-; Fitter               ; 00:03:43     ; 1.3                     ; 7946 MB             ; 00:07:25                           ;
-; Assembler            ; 00:00:12     ; 1.0                     ; 4917 MB             ; 00:00:08                           ;
-; Timing Analyzer      ; 00:00:15     ; 3.5                     ; 5463 MB             ; 00:00:30                           ;
-; Total                ; 00:05:13     ; --                      ; --                  ; 00:08:45                           ;
+; Analysis & Synthesis ; 00:01:33     ; 1.0                     ; 5059 MB             ; 00:02:01                           ;
+; Fitter               ; 00:03:37     ; 1.1                     ; 6387 MB             ; 00:06:38                           ;
+; Assembler            ; 00:00:13     ; 1.0                     ; 4911 MB             ; 00:00:13                           ;
+; Timing Analyzer      ; 00:00:31     ; 1.5                     ; 5278 MB             ; 00:00:44                           ;
+; Total                ; 00:05:54     ; --                      ; --                  ; 00:09:36                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
@@ -117,10 +117,10 @@ refer to the applicable agreement for further details.
 +----------------------+------------------+------------+------------+----------------+
 ; Module Name          ; Machine Hostname ; OS Name    ; OS Version ; Processor type ;
 +----------------------+------------------+------------+------------+----------------+
-; Analysis & Synthesis ; DESKTOP-9GSUV50  ; Windows 10 ; 10.0       ; x86_64         ;
-; Fitter               ; DESKTOP-9GSUV50  ; Windows 10 ; 10.0       ; x86_64         ;
-; Assembler            ; DESKTOP-9GSUV50  ; Windows 10 ; 10.0       ; x86_64         ;
-; Timing Analyzer      ; DESKTOP-9GSUV50  ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Synthesis ; DESKTOP-4G3UAMB  ; Windows 10 ; 10.0       ; x86_64         ;
+; Fitter               ; DESKTOP-4G3UAMB  ; Windows 10 ; 10.0       ; x86_64         ;
+; Assembler            ; DESKTOP-4G3UAMB  ; Windows 10 ; 10.0       ; x86_64         ;
+; Timing Analyzer      ; DESKTOP-4G3UAMB  ; Windows 10 ; 10.0       ; x86_64         ;
 +----------------------+------------------+------------+------------+----------------+
 
 

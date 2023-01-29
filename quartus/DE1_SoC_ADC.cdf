@@ -6,7 +6,7 @@ JedecChain;
 	P ActionCode(Ign)
 		Device PartName(SOCVHPS) MfrSpec(OpMask(0));
 	P ActionCode(Cfg)
-		Device PartName(5CSEMA5F31) Path("C:/Users/yannv/Desktop/Projects/quartus/tp_train/DE1_SoC_TP2copyTP1/") File("DE1_SoC_ADC.sof") MfrSpec(OpMask(1));
+		Device PartName(5CSEMA5F31) Path("C:/Users/yannv/Desktop/Projects/FPGA/fpga-2D-radar/quartus/") File("DE1_SoC_ADC_time_limited.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 

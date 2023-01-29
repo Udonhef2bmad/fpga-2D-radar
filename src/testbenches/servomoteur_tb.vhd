@@ -17,8 +17,8 @@ ARCHITECTURE RTL OF servomoteur_TB IS
     SIGNAL ENDSIM : STD_LOGIC;
 
     -- Test signals
-    SIGNAL position : STD_LOGIC;
-    SIGNAL cmd : STD_LOGIC;
+    SIGNAL position : STD_LOGIC_VECTOR(9 DOWNTO 0);
+    SIGNAL commande : STD_LOGIC;
 
 BEGIN
 
@@ -26,9 +26,9 @@ BEGIN
     test_inst : ENTITY work.servomoteur
         PORT MAP(
             clk => CLK,
-            Reset_n => RST,
+            reset_n => RST,
             position => position,
-            cmd => cmd
+            commande => commande
         );
     -- test process
     test_proc : PROCESS
@@ -40,15 +40,38 @@ BEGIN
         RST <= '1'; -- reset is active low (device works when rst=1)
 
         -- test here
-        position <= '0';
-        WAIT FOR 100 ms;
-        position <= '1';
-        WAIT FOR 200 ms;
-        position <= '0';
+        position <= "0000000000";
+        WAIT FOR 20 ms;
 
-        position <= '1';
-        WAIT FOR 200 ms;
-        position <= '0';
+        position <= "0000000001";
+        WAIT FOR 20 ms;
+
+        position <= "0000000010";
+        WAIT FOR 20 ms;
+
+        position <= "0000000100";
+        WAIT FOR 20 ms;
+
+        position <= "0000001000";
+        WAIT FOR 20 ms;
+
+        position <= "0000010000";
+        WAIT FOR 20 ms;
+
+        position <= "0000100000";
+        WAIT FOR 20 ms;
+
+        position <= "0010000000";
+        WAIT FOR 20 ms;
+
+        position <= "0100000000";
+        WAIT FOR 20 ms;
+
+        position <= "1000000000";
+        WAIT FOR 20 ms;
+
+        position <= "1111111111";
+        WAIT FOR 20 ms;
 
         -- simulation end (do not modify)
         ENDSIM <= '1';

@@ -18,7 +18,8 @@ module DE1_SoC_QSYS (
 	sevenseg_hex3,
 	sevenseg_hex4,
 	sevenseg_hex5,
-	sw_external_connection_export);	
+	sw_external_connection_export,
+	avalon_servomoteur_output_commande);	
 
 	output		adc_ltc2308_conduit_end_CONVST;
 	output		adc_ltc2308_conduit_end_SCK;
@@ -39,4 +40,5 @@ module DE1_SoC_QSYS (
 	output	[6:0]	sevenseg_hex4;
 	output	[6:0]	sevenseg_hex5;
 	input	[9:0]	sw_external_connection_export;
+	output		avalon_servomoteur_output_commande;
 endmodule

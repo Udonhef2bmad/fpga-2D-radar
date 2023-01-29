@@ -1,5 +1,5 @@
 
-State Machine - |DE1_SoC_Basic_Nios2_SOC_telemetre_us|DE1_SoC_QSYS:u0|Telemetre_us_Avalon:avalon_telemetre_us_inst|TELEMETRE_US:telemeter|State
+State Machine - |Nios2_telemetre_servo|DE1_SoC_QSYS:u0|Telemetre_us_Avalon:avalon_telemetre_us_inst|TELEMETRE_US:telemeter|State
 Name State.E5 State.E4 State.E3 State.E2 State.E1 State.E0 
 State.E0 0 0 0 0 0 0 
 State.E1 0 0 0 0 1 1 
@@ -8,7 +8,13 @@ State.E3 0 0 1 0 0 1
 State.E4 0 1 0 0 0 1 
 State.E5 1 0 0 0 0 1 
 
-State Machine - |DE1_SoC_Basic_Nios2_SOC_telemetre_us|DE1_SoC_QSYS:u0|DE1_SoC_QSYS_nios2_qsys:nios2_qsys|DE1_SoC_QSYS_nios2_qsys_cpu:cpu|DE1_SoC_QSYS_nios2_qsys_cpu_nios2_oci:the_DE1_SoC_QSYS_nios2_qsys_cpu_nios2_oci|DE1_SoC_QSYS_nios2_qsys_cpu_debug_slave_wrapper:the_DE1_SoC_QSYS_nios2_qsys_cpu_debug_slave_wrapper|DE1_SoC_QSYS_nios2_qsys_cpu_debug_slave_tck:the_DE1_SoC_QSYS_nios2_qsys_cpu_debug_slave_tck|DRsize
+State Machine - |Nios2_telemetre_servo|DE1_SoC_QSYS:u0|servomoteur_Avalon:avalon_servomoteur_0|servomoteur:servomoteur|State
+Name State.E2 State.E1 State.E0 
+State.E0 0 0 0 
+State.E1 0 1 1 
+State.E2 1 0 1 
+
+State Machine - |Nios2_telemetre_servo|DE1_SoC_QSYS:u0|DE1_SoC_QSYS_nios2_qsys:nios2_qsys|DE1_SoC_QSYS_nios2_qsys_cpu:cpu|DE1_SoC_QSYS_nios2_qsys_cpu_nios2_oci:the_DE1_SoC_QSYS_nios2_qsys_cpu_nios2_oci|DE1_SoC_QSYS_nios2_qsys_cpu_debug_slave_wrapper:the_DE1_SoC_QSYS_nios2_qsys_cpu_debug_slave_wrapper|DE1_SoC_QSYS_nios2_qsys_cpu_debug_slave_tck:the_DE1_SoC_QSYS_nios2_qsys_cpu_debug_slave_tck|DRsize
 Name DRsize.101 DRsize.100 DRsize.011 DRsize.010 DRsize.001 DRsize.000 
 DRsize.000 0 0 0 0 0 0 
 DRsize.001 0 0 0 0 1 1 

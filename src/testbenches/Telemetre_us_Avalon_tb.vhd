@@ -53,8 +53,10 @@ BEGIN
 
         -- test here
 
+        
         echo <= '0'; --echo pin default state
-        read_n <= '0';
+        read_n <= '1'; --read data when low
+        chipselect <= '0'; -- select chip when high
 
         wait until trig = '1'; -- HC SR04 waits for trigger
         WAIT FOR 10 us; -- HC SR04 takes 10 us to react
@@ -63,11 +65,26 @@ BEGIN
         echo <= '0'; -- HC SR04 signals echo end
         --WAIT FOR 200 ms; --cooldown
 
+        --user reads readddata
+        WAIT FOR 10 us; -- wait some time
+        chipselect <= '1'; --select chip
+        read_n <= '0'; -- read data
+        WAIT FOR 10 us; -- wait some time
+        chipselect <= '0'; ---deselect chip
+        read_n <= '1'; -- don't read data
+
 
         wait until trig = '1'; -- HC SR04 waits for trigger
         WAIT FOR 10 us; -- HC SR04 takes 10 us to react
         echo <= '1'; -- HC SR04
         WAIT FOR 2 ms; -- wait 2ms or 100 000 000 ticks; sound wave should cover 68.6cm round trip(roughly 34cm total distance)
+        echo <= '0'; -- HC SR04 signals echo end
+
+
+        wait until trig = '1'; -- HC SR04 waits for trigger
+        WAIT FOR 10 us; -- HC SR04 takes 10 us to react
+        echo <= '1'; -- HC SR04
+        WAIT FOR 4 ms; -- wait 4ms or 200 000 000 ticks; sound wave should cover 137.2cm round trip(roughly 68cm total distance)
         echo <= '0'; -- HC SR04 signals echo end
 
         WAIT FOR 10 ms; 

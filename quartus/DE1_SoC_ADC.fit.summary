@@ -1,17 +1,17 @@
-Fitter Status : Successful - Fri Jan 27 01:40:45 2023
+Fitter Status : Successful - Fri Jan 27 16:05:47 2023
 Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 Revision Name : DE1_SoC_ADC
-Top-level Entity Name : DE1_SoC_Basic_Nios2_SOC_telemetre_us
+Top-level Entity Name : Nios2_telemetre_servo
 Family : Cyclone V
 Device : 5CSEMA5F31C6
 Timing Models : Final
-Logic utilization (in ALMs) : 2,209 / 32,070 ( 7 % )
-Total registers : 3544
+Logic utilization (in ALMs) : 2,245 / 32,070 ( 7 % )
+Total registers : 3592
 Total pins : 107 / 457 ( 23 % )
 Total virtual pins : 0
 Total block memory bits : 1,368,512 / 4,065,280 ( 34 % )
 Total RAM Blocks : 178 / 397 ( 45 % )
-Total DSP Blocks : 5 / 87 ( 6 % )
+Total DSP Blocks : 6 / 87 ( 7 % )
 Total HSSI RX PCSs : 0
 Total HSSI PMA RX Deserializers : 0
 Total HSSI TX PCSs : 0

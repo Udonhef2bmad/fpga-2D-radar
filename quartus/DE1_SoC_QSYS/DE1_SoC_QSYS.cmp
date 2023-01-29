@@ -4,6 +4,7 @@
 			adc_ltc2308_conduit_end_SCK        : out std_logic;                                       -- SCK
 			adc_ltc2308_conduit_end_SDI        : out std_logic;                                       -- SDI
 			adc_ltc2308_conduit_end_SDO        : in  std_logic                    := 'X';             -- SDO
+			avalon_servomoteur_output_commande : out std_logic;                                       -- commande
 			avalon_telemetre_us_output_trig    : out std_logic;                                       -- trig
 			avalon_telemetre_us_output_echo    : in  std_logic                    := 'X';             -- echo
 			avalon_telemetre_us_output_dist_cm : out std_logic_vector(9 downto 0);                    -- dist_cm

@@ -17,11 +17,16 @@ END Telemetre_us_Avalon;
 
 ARCHITECTURE RTL OF Telemetre_us_Avalon IS
 
-    signal i_dist_cm : STD_LOGIC_VECTOR (9 DOWNTO 0);
+    SIGNAL i_dist_cm : STD_LOGIC_VECTOR (9 DOWNTO 0);
 
 BEGIN
 
-    readdata <= (31 downto i_dist_cm'length => '0') & i_dist_cm;
+    PROCESS (chipselect, read_n)
+    BEGIN
+        IF chipselect = '1' and read_n = '0' then
+            readdata <= (31 DOWNTO i_dist_cm'length => '0') & i_dist_cm;
+        END IF;
+    END PROCESS;
 
     dist_cm <= i_dist_cm;
 

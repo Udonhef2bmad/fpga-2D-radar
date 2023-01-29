@@ -12,6 +12,7 @@ entity DE1_SoC_QSYS is
 		adc_ltc2308_conduit_end_SCK        : out std_logic;                                       --                           .SCK
 		adc_ltc2308_conduit_end_SDI        : out std_logic;                                       --                           .SDI
 		adc_ltc2308_conduit_end_SDO        : in  std_logic                    := '0';             --                           .SDO
+		avalon_servomoteur_output_commande : out std_logic;                                       --  avalon_servomoteur_output.commande
 		avalon_telemetre_us_output_trig    : out std_logic;                                       -- avalon_telemetre_us_output.trig
 		avalon_telemetre_us_output_echo    : in  std_logic                    := '0';             --                           .echo
 		avalon_telemetre_us_output_dist_cm : out std_logic_vector(9 downto 0);                    --                           .dist_cm
@@ -58,6 +59,17 @@ architecture rtl of DE1_SoC_QSYS is
 			adc_clk            : in  std_logic                     := 'X'              -- clk
 		);
 	end component adc_ltc2308_fifo;
+
+	component servomoteur_Avalon is
+		port (
+			clk        : in  std_logic                     := 'X';             -- clk
+			reset_n    : in  std_logic                     := 'X';             -- reset_n
+			chipselect : in  std_logic                     := 'X';             -- chipselect
+			write_n    : in  std_logic                     := 'X';             -- write_n
+			writedata  : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
+			commande   : out std_logic                                         -- commande
+		);
+	end component servomoteur_Avalon;
 
 	component Telemetre_us_Avalon is
 		port (
@@ -227,6 +239,9 @@ architecture rtl of DE1_SoC_QSYS is
 			adc_ltc2308_slave_readdata                         : in  std_logic_vector(15 downto 0) := (others => 'X'); -- readdata
 			adc_ltc2308_slave_writedata                        : out std_logic_vector(15 downto 0);                    -- writedata
 			adc_ltc2308_slave_chipselect                       : out std_logic;                                        -- chipselect
+			avalon_servomoteur_0_avalon_slave_0_write          : out std_logic;                                        -- write
+			avalon_servomoteur_0_avalon_slave_0_writedata      : out std_logic_vector(31 downto 0);                    -- writedata
+			avalon_servomoteur_0_avalon_slave_0_chipselect     : out std_logic;                                        -- chipselect
 			avalon_telemetre_us_inst_avalon_slave_0_read       : out std_logic;                                        -- read
 			avalon_telemetre_us_inst_avalon_slave_0_readdata   : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
 			avalon_telemetre_us_inst_avalon_slave_0_chipselect : out std_logic;                                        -- chipselect
@@ -526,6 +541,9 @@ architecture rtl of DE1_SoC_QSYS is
 	signal mm_interconnect_0_avalon_telemetre_us_inst_avalon_slave_0_chipselect     : std_logic;                     -- mm_interconnect_0:avalon_telemetre_us_inst_avalon_slave_0_chipselect -> avalon_telemetre_us_inst:chipselect
 	signal mm_interconnect_0_avalon_telemetre_us_inst_avalon_slave_0_readdata       : std_logic_vector(31 downto 0); -- avalon_telemetre_us_inst:readdata -> mm_interconnect_0:avalon_telemetre_us_inst_avalon_slave_0_readdata
 	signal mm_interconnect_0_avalon_telemetre_us_inst_avalon_slave_0_read           : std_logic;                     -- mm_interconnect_0:avalon_telemetre_us_inst_avalon_slave_0_read -> mm_interconnect_0_avalon_telemetre_us_inst_avalon_slave_0_read:in
+	signal mm_interconnect_0_avalon_servomoteur_0_avalon_slave_0_chipselect         : std_logic;                     -- mm_interconnect_0:avalon_servomoteur_0_avalon_slave_0_chipselect -> avalon_servomoteur_0:chipselect
+	signal mm_interconnect_0_avalon_servomoteur_0_avalon_slave_0_write              : std_logic;                     -- mm_interconnect_0:avalon_servomoteur_0_avalon_slave_0_write -> mm_interconnect_0_avalon_servomoteur_0_avalon_slave_0_write:in
+	signal mm_interconnect_0_avalon_servomoteur_0_avalon_slave_0_writedata          : std_logic_vector(31 downto 0); -- mm_interconnect_0:avalon_servomoteur_0_avalon_slave_0_writedata -> avalon_servomoteur_0:writedata
 	signal mm_interconnect_0_sysid_qsys_control_slave_readdata                      : std_logic_vector(31 downto 0); -- sysid_qsys:readdata -> mm_interconnect_0:sysid_qsys_control_slave_readdata
 	signal mm_interconnect_0_sysid_qsys_control_slave_address                       : std_logic_vector(0 downto 0);  -- mm_interconnect_0:sysid_qsys_control_slave_address -> sysid_qsys:address
 	signal mm_interconnect_0_nios2_qsys_debug_mem_slave_readdata                    : std_logic_vector(31 downto 0); -- nios2_qsys:debug_mem_slave_readdata -> mm_interconnect_0:nios2_qsys_debug_mem_slave_readdata
@@ -579,6 +597,7 @@ architecture rtl of DE1_SoC_QSYS is
 	signal mm_interconnect_0_seven_seg_avalon_slave_0_chipselect_ports_inv          : std_logic;                     -- mm_interconnect_0_seven_seg_avalon_slave_0_chipselect:inv -> seven_seg:chipselect_n
 	signal mm_interconnect_0_seven_seg_avalon_slave_0_write_ports_inv               : std_logic;                     -- mm_interconnect_0_seven_seg_avalon_slave_0_write:inv -> seven_seg:write_n
 	signal mm_interconnect_0_avalon_telemetre_us_inst_avalon_slave_0_read_ports_inv : std_logic;                     -- mm_interconnect_0_avalon_telemetre_us_inst_avalon_slave_0_read:inv -> avalon_telemetre_us_inst:read_n
+	signal mm_interconnect_0_avalon_servomoteur_0_avalon_slave_0_write_ports_inv    : std_logic;                     -- mm_interconnect_0_avalon_servomoteur_0_avalon_slave_0_write:inv -> avalon_servomoteur_0:write_n
 	signal mm_interconnect_0_sw_s1_write_ports_inv                                  : std_logic;                     -- mm_interconnect_0_sw_s1_write:inv -> sw:write_n
 	signal mm_interconnect_0_interval_timer_s1_write_ports_inv                      : std_logic;                     -- mm_interconnect_0_interval_timer_s1_write:inv -> interval_timer:write_n
 	signal mm_interconnect_0_adc_ltc2308_slave_chipselect_ports_inv                 : std_logic;                     -- mm_interconnect_0_adc_ltc2308_slave_chipselect:inv -> adc_ltc2308:slave_chipselect_n
@@ -586,7 +605,7 @@ architecture rtl of DE1_SoC_QSYS is
 	signal mm_interconnect_0_adc_ltc2308_slave_write_ports_inv                      : std_logic;                     -- mm_interconnect_0_adc_ltc2308_slave_write:inv -> adc_ltc2308:slave_wrtie_n
 	signal rst_controller_reset_out_reset_ports_inv                                 : std_logic;                     -- rst_controller_reset_out_reset:inv -> [KEY:reset_n, interval_timer:reset_n]
 	signal rst_controller_001_reset_out_reset_ports_inv                             : std_logic;                     -- rst_controller_001_reset_out_reset:inv -> [adc_ltc2308:slave_reset_n, jtag_uart:rst_n, sw:reset_n, sysid_qsys:reset_n]
-	signal rst_controller_002_reset_out_reset_ports_inv                             : std_logic;                     -- rst_controller_002_reset_out_reset:inv -> [avalon_telemetre_us_inst:reset_n, nios2_qsys:reset_n, seven_seg:reset_n]
+	signal rst_controller_002_reset_out_reset_ports_inv                             : std_logic;                     -- rst_controller_002_reset_out_reset:inv -> [avalon_servomoteur_0:reset_n, avalon_telemetre_us_inst:reset_n, nios2_qsys:reset_n, seven_seg:reset_n]
 
 begin
 
@@ -614,6 +633,16 @@ begin
 			slave_reset_n      => rst_controller_001_reset_out_reset_ports_inv,             --     reset_sink.reset_n
 			slave_clk          => pll_sys_outclk0_clk,                                      --     clock_sink.clk
 			adc_clk            => pll_sys_outclk1_clk                                       -- clock_sink_adc.clk
+		);
+
+	avalon_servomoteur_0 : component servomoteur_Avalon
+		port map (
+			clk        => clk_clk,                                                               --           clock.clk
+			reset_n    => rst_controller_002_reset_out_reset_ports_inv,                          --           reset.reset_n
+			chipselect => mm_interconnect_0_avalon_servomoteur_0_avalon_slave_0_chipselect,      --  avalon_slave_0.chipselect
+			write_n    => mm_interconnect_0_avalon_servomoteur_0_avalon_slave_0_write_ports_inv, --                .write_n
+			writedata  => mm_interconnect_0_avalon_servomoteur_0_avalon_slave_0_writedata,       --                .writedata
+			commande   => avalon_servomoteur_output_commande                                     -- servomoteur_end.commande
 		);
 
 	avalon_telemetre_us_inst : component Telemetre_us_Avalon
@@ -775,6 +804,9 @@ begin
 			adc_ltc2308_slave_readdata                         => mm_interconnect_0_adc_ltc2308_slave_readdata,                         --                                        .readdata
 			adc_ltc2308_slave_writedata                        => mm_interconnect_0_adc_ltc2308_slave_writedata,                        --                                        .writedata
 			adc_ltc2308_slave_chipselect                       => mm_interconnect_0_adc_ltc2308_slave_chipselect,                       --                                        .chipselect
+			avalon_servomoteur_0_avalon_slave_0_write          => mm_interconnect_0_avalon_servomoteur_0_avalon_slave_0_write,          --     avalon_servomoteur_0_avalon_slave_0.write
+			avalon_servomoteur_0_avalon_slave_0_writedata      => mm_interconnect_0_avalon_servomoteur_0_avalon_slave_0_writedata,      --                                        .writedata
+			avalon_servomoteur_0_avalon_slave_0_chipselect     => mm_interconnect_0_avalon_servomoteur_0_avalon_slave_0_chipselect,     --                                        .chipselect
 			avalon_telemetre_us_inst_avalon_slave_0_read       => mm_interconnect_0_avalon_telemetre_us_inst_avalon_slave_0_read,       -- avalon_telemetre_us_inst_avalon_slave_0.read
 			avalon_telemetre_us_inst_avalon_slave_0_readdata   => mm_interconnect_0_avalon_telemetre_us_inst_avalon_slave_0_readdata,   --                                        .readdata
 			avalon_telemetre_us_inst_avalon_slave_0_chipselect => mm_interconnect_0_avalon_telemetre_us_inst_avalon_slave_0_chipselect, --                                        .chipselect
@@ -1062,6 +1094,8 @@ begin
 	mm_interconnect_0_seven_seg_avalon_slave_0_write_ports_inv <= not mm_interconnect_0_seven_seg_avalon_slave_0_write;
 
 	mm_interconnect_0_avalon_telemetre_us_inst_avalon_slave_0_read_ports_inv <= not mm_interconnect_0_avalon_telemetre_us_inst_avalon_slave_0_read;
+
+	mm_interconnect_0_avalon_servomoteur_0_avalon_slave_0_write_ports_inv <= not mm_interconnect_0_avalon_servomoteur_0_avalon_slave_0_write;
 
 	mm_interconnect_0_sw_s1_write_ports_inv <= not mm_interconnect_0_sw_s1_write;
 

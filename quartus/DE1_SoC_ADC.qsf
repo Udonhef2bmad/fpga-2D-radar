@@ -5,7 +5,7 @@
 
 set_global_assignment -name FAMILY "Cyclone V"
 set_global_assignment -name DEVICE 5CSEMA5F31C6
-set_global_assignment -name TOP_LEVEL_ENTITY DE1_SoC_Basic_Nios2_SOC_telemetre_us
+set_global_assignment -name TOP_LEVEL_ENTITY Nios2_telemetre_servo
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 13
 set_global_assignment -name LAST_QUARTUS_VERSION "18.1.0 Lite Edition"
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "THU JUL 11 11:26:45 2013"
@@ -373,8 +373,11 @@ set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name TIMING_ANALYZER_MULTICORNER_ANALYSIS ON
 set_global_assignment -name SMART_RECOMPILE ON
 set_global_assignment -name NUM_PARALLEL_PROCESSORS ALL
-set_global_assignment -name VHDL_FILE "C:\\Users\\yannv\\Desktop\\Projects\\quartus\\fpga-2D-radar\\src\\toplevels\\DE1_SoC_Basic_Nios2_SOC_telemetre_us.vhd"
-set_global_assignment -name VHDL_FILE "../../fpga-2D-radar/src/designs/top_TELEMETRE_US.vhd"
+set_global_assignment -name VHDL_FILE ../src/toplevels/Nios2_telemetre_servo.vhd
+set_global_assignment -name VHDL_FILE ../src/toplevels/Nios2_telemetre.vhd
+set_global_assignment -name VHDL_FILE "C:\\Users\\yannv\\Desktop\\Projects\\FPGA\\fpga-2D-radar\\src\\toplevels\\top_TELEMETRE_US_servomoteur.vhd"
+set_global_assignment -name VHDL_FILE "C:\\Users\\yannv\\Desktop\\Projects\\FPGA\\fpga-2D-radar\\src\\designs\\servomoteur.vhd"
+set_global_assignment -name VHDL_FILE "C:\\Users\\yannv\\Desktop\\Projects\\FPGA\\fpga-2D-radar\\src\\toplevels\\top_servomoteur.vhd"
 set_global_assignment -name VHDL_FILE "../../fpga-2D-radar/src/designs/TELEMETRE_US.vhd"
 set_global_assignment -name VHDL_FILE DE1_SoC_Basic_Nios2_SOC.vhd
 set_global_assignment -name SDC_FILE DE1_SoC_ADC.sdc

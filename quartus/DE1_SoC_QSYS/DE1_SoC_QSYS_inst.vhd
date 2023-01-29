@@ -18,7 +18,8 @@
 			sevenseg_hex3                      : out std_logic_vector(6 downto 0);                    -- hex3
 			sevenseg_hex4                      : out std_logic_vector(6 downto 0);                    -- hex4
 			sevenseg_hex5                      : out std_logic_vector(6 downto 0);                    -- hex5
-			sw_external_connection_export      : in  std_logic_vector(9 downto 0) := (others => 'X')  -- export
+			sw_external_connection_export      : in  std_logic_vector(9 downto 0) := (others => 'X'); -- export
+			avalon_servomoteur_output_commande : out std_logic                                        -- commande
 		);
 	end component DE1_SoC_QSYS;
 
@@ -42,6 +43,7 @@
 			sevenseg_hex3                      => CONNECTED_TO_sevenseg_hex3,                      --                           .hex3
 			sevenseg_hex4                      => CONNECTED_TO_sevenseg_hex4,                      --                           .hex4
 			sevenseg_hex5                      => CONNECTED_TO_sevenseg_hex5,                      --                           .hex5
-			sw_external_connection_export      => CONNECTED_TO_sw_external_connection_export       --     sw_external_connection.export
+			sw_external_connection_export      => CONNECTED_TO_sw_external_connection_export,      --     sw_external_connection.export
+			avalon_servomoteur_output_commande => CONNECTED_TO_avalon_servomoteur_output_commande  --  avalon_servomoteur_output.commande
 		);
 

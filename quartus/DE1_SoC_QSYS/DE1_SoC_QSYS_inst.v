@@ -17,6 +17,7 @@
 		.sevenseg_hex3                      (<connected-to-sevenseg_hex3>),                      //                           .hex3
 		.sevenseg_hex4                      (<connected-to-sevenseg_hex4>),                      //                           .hex4
 		.sevenseg_hex5                      (<connected-to-sevenseg_hex5>),                      //                           .hex5
-		.sw_external_connection_export      (<connected-to-sw_external_connection_export>)       //     sw_external_connection.export
+		.sw_external_connection_export      (<connected-to-sw_external_connection_export>),      //     sw_external_connection.export
+		.avalon_servomoteur_output_commande (<connected-to-avalon_servomoteur_output_commande>)  //  avalon_servomoteur_output.commande
 	);
 
