@@ -1,0 +1,58 @@
+/*
+ * "Hello World" example.
+ *
+ * This example prints 'Hello from Nios II' to the STDOUT stream. It runs on
+ * the Nios II 'standard', 'full_featured', 'fast', and 'low_cost' example
+ * designs. It runs with or without the MicroC/OS-II RTOS and requires a STDOUT
+ * device in your system's hardware.
+ * The memory footprint of this hosted application is ~69 kbytes by default
+ * using the standard reference design.
+ *
+ * For a reduced footprint version of this template, and an explanation of how
+ * to reduce the memory footprint for a given application, see the
+ * "small_hello_world" template.
+ *
+ */
+
+#include "system.h"
+#include "altera_avalon_pio_regs.h"
+#include "unistd.h"
+#include "stdio.h"
+#include <io.h>
+
+
+void printNumHex(int num)
+{
+	unsigned int SevenSeg[10] = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0xED, 0xFD, 0x07, 0xFF, 0xEF};
+
+	int offset = 4;
+	int digit_count = 6;
+
+	// split the count into individual digits
+	for (int i = 0; i < digit_count; i++)
+	{
+		IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE + i*offset, ~SevenSeg[num % 10] );
+		num /= 10;
+	}
+	printf("\n");
+}
+
+
+int main()
+{
+	int distance = 0;
+	printf("Hello from Nios II!\n");
+
+	sweeploop(200000, 40);
+
+	while(1)
+	{
+		distance = IORD(AVALON_TELEMETRE_US_INST_BASE, 0);
+		printf("distance : %d\n", distance);
+		printNumHex(distance);
+		usleep(100000);
+	}
+
+
+  return 0;
+}

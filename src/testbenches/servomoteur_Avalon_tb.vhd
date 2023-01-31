@@ -2,15 +2,12 @@ LIBRARY IEEE;
 USE IEEE.std_logic_1164.ALL;
 USE IEEE.numeric_std.ALL;
 
-USE IEEE.math_real.ALL;
-
-ENTITY servomoteur_Avalon_tb IS
+ENTITY servomoteur_avalon_tb IS
 END ENTITY;
 
-ARCHITECTURE RTL OF servomoteur_Avalon_tb IS
+ARCHITECTURE RTL OF servomoteur_avalon_tb IS
 
     -- 50MHz Clock period definition (do not modify)
-    -- CONSTANT clock_period : TIME := 1 / (50 * 10**6);
     SIGNAL clock_period : TIME := 20 * ns;
 
     -- simulation signals (do not modify)
@@ -29,10 +26,10 @@ ARCHITECTURE RTL OF servomoteur_Avalon_tb IS
 BEGIN
 
     -- instantiate DUT
-    test_inst : ENTITY work.servomoteur_Avalon
+    test_inst : ENTITY work.servomoteur_avalon
         PORT MAP(
             clk => CLK,
-            reset_n => RST,
+            rst_n => RST,
             chipselect => chipselect,
             write_n => write_n,
             writedata => writedata,
@@ -50,10 +47,10 @@ BEGIN
         -- test here
 
         --enable writing to the module
-        writedata <= (others => '0');
+        writedata <= (OTHERS => '0');
 
-        chipselect <= '1'; --select chip
-        write_n <= '0'; -- write data
+        chipselect <= '0'; --deselect chip
+        write_n <= '1'; -- don't write data
 
         writedata(9 DOWNTO 0) <= "0000000000";
         WAIT FOR 20 ms;
@@ -61,17 +58,26 @@ BEGIN
         writedata(9 DOWNTO 0) <= "0000000001";
         WAIT FOR 20 ms;
 
+        chipselect <= '1'; --select chip
+        write_n <= '1'; -- don't write data
+
         writedata(9 DOWNTO 0) <= "0000000010";
         WAIT FOR 20 ms;
 
         writedata(9 DOWNTO 0) <= "0000000100";
         WAIT FOR 20 ms;
 
+        chipselect <= '1'; --select chip
+        write_n <= '0'; -- write data
+
         writedata(9 DOWNTO 0) <= "0000001000";
         WAIT FOR 20 ms;
 
         writedata(9 DOWNTO 0) <= "0000010000";
         WAIT FOR 20 ms;
+
+        chipselect <= '1'; --select chip
+        write_n <= '1'; -- don't write data
 
         writedata(9 DOWNTO 0) <= "0000100000";
         WAIT FOR 20 ms;
@@ -88,22 +94,11 @@ BEGIN
         writedata(9 DOWNTO 0) <= "1111111111";
         WAIT FOR 20 ms;
 
-
-        --disable writing to the module
-        chipselect <= '0'; --select chip
-        write_n <= '1'; -- write data
-
         writedata(9 DOWNTO 0) <= "0000000000";
         WAIT FOR 20 ms;
 
         writedata(9 DOWNTO 0) <= "1111111111";
         WAIT FOR 20 ms;
-
-
-        
-
-
-        WAIT FOR 50 ms;
 
         -- simulation end (do not modify)
         ENDSIM <= '1';

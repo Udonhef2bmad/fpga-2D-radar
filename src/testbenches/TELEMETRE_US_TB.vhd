@@ -2,15 +2,12 @@ LIBRARY IEEE;
 USE IEEE.std_logic_1164.ALL;
 USE IEEE.numeric_std.ALL;
 
-USE IEEE.math_real.ALL;
-
-ENTITY TELEMETRE_US_TB IS
+ENTITY telemetre_us_tb IS
 END ENTITY;
 
-ARCHITECTURE RTL OF TELEMETRE_US_TB IS
+ARCHITECTURE RTL OF telemetre_us_tb IS
 
     -- 50MHz Clock period definition (do not modify)
-    -- CONSTANT clock_period : TIME := 1 / (50 * 10**6);
     SIGNAL clock_period : TIME := 20 * ns;
 
     -- simulation signals (do not modify)
@@ -21,17 +18,17 @@ ARCHITECTURE RTL OF TELEMETRE_US_TB IS
     -- Test signals
     signal echo : std_logic;
     signal trig : std_logic;
-    signal Dist_cm : std_logic_vector(9 downto 0);
+    signal dist_cm : std_logic_vector(9 downto 0);
 
 BEGIN
 
     -- instantiate DUT
-    test_inst : ENTITY work.TELEMETRE_US
+    test_inst : ENTITY work.telemetre_us
     port map (
         clk => CLK,
-        Reset_n => RST,
+        rst_n => RST,
         echo => echo,
-        Dist_cm => Dist_cm,
+        dist_cm => dist_cm,
         trig => trig
     );
 
@@ -52,76 +49,62 @@ BEGIN
         wait until trig = '1'; -- HC SR04 waits for trigger
         WAIT FOR 10 us; -- HC SR04 takes 10 us to react
         echo <= '1'; -- HC SR04
-        WAIT FOR 1 ms; -- wait 1ms or 50 000 000 ticks; sound wave should cover 34.3cm round trip(roughly 17cm total distance)
+        WAIT FOR 0 ms; -- wait 0ms or (roughly 0cm distance)
         echo <= '0'; -- HC SR04 signals echo end
-        --WAIT FOR 200 ms; --cooldown
 
 
         wait until trig = '1'; -- HC SR04 waits for trigger
         WAIT FOR 10 us; -- HC SR04 takes 10 us to react
         echo <= '1'; -- HC SR04
-        WAIT FOR 2 ms; -- wait 2ms
+        WAIT FOR 1 ms; -- wait 1ms or (roughly 17cm distance)
         echo <= '0'; -- HC SR04 signals echo end
 
 
         wait until trig = '1'; -- HC SR04 waits for trigger
-        echo <= '0';
         WAIT FOR 10 us; -- HC SR04 takes 10 us to react
         echo <= '1'; -- HC SR04
-        WAIT FOR 4 ms; -- wait 4ms 
+        WAIT FOR 2 ms; -- wait 2ms (roughly 34cm distance)
         echo <= '0'; -- HC SR04 signals echo end
 
 
         wait until trig = '1'; -- HC SR04 waits for trigger
-        echo <= '0';
         WAIT FOR 10 us; -- HC SR04 takes 10 us to react
         echo <= '1'; -- HC SR04
-        WAIT FOR 8 ms; -- wait 8ms
+        WAIT FOR 4 ms; -- wait 4ms (roughly 68cm distance)
         echo <= '0'; -- HC SR04 signals echo end
 
 
         wait until trig = '1'; -- HC SR04 waits for trigger
-        echo <= '0';
         WAIT FOR 10 us; -- HC SR04 takes 10 us to react
         echo <= '1'; -- HC SR04
-        WAIT FOR 16 ms; 
+        WAIT FOR 8 ms; -- wait 8ms (roughly 137cm distance)
         echo <= '0'; -- HC SR04 signals echo end
 
-        wait until trig = '1'; -- HC SR04 waits for trigger
-        echo <= '0';
-        WAIT FOR 10 us; -- HC SR04 takes 10 us to react
-        echo <= '1'; -- HC SR04
-        WAIT FOR 32 ms; 
-        echo <= '0'; -- HC SR04 signals echo end
 
         wait until trig = '1'; -- HC SR04 waits for trigger
-        echo <= '0';
         WAIT FOR 10 us; -- HC SR04 takes 10 us to react
         echo <= '1'; -- HC SR04
+        WAIT FOR 16 ms; -- wait 16ms (roughly 274cm distance)
+        echo <= '0'; -- HC SR04 signals echo end
+
+        -- NOTICE -- 
+        -- HC-SR04 cannot reach beyond 400cm distance
+        -- module will simply set echo to HIGH if that is the case
+
+        wait until trig = '1'; -- HC SR04 waits for trigger
+        WAIT FOR 10 us; -- HC SR04 takes 10 us to react
+        echo <= '1'; -- HC SR04
+        WAIT FOR 32 ms; -- wait 32ms (roughly 548cm distance)
+        echo <= '0'; -- HC SR04 signals echo end
+
+
+        wait until trig = '1'; -- HC SR04 waits for trigger
+        WAIT FOR 10 us; -- HC SR04 takes 10 us to react
+        echo <= '1'; -- HC SR04
+        WAIT FOR 64 ms; -- wait 64ms (roughly 1096cm distance) -- note the distance is stored on 10 bits, so the distance will be truncated here
+        echo <= '0'; -- HC SR04 signals echo end
+
         WAIT FOR 64 ms; 
-        echo <= '0'; -- HC SR04 signals echo end
-
-        wait until trig = '1'; -- HC SR04 waits for trigger
-        echo <= '0';
-        WAIT FOR 10 us; -- HC SR04 takes 10 us to react
-        echo <= '1'; -- HC SR04
-        WAIT FOR 128 ms; 
-        echo <= '0'; -- HC SR04 signals echo end
-
-        wait until trig = '1'; -- HC SR04 waits for trigger
-        echo <= '0';
-        WAIT FOR 10 us; -- HC SR04 takes 10 us to react
-        echo <= '1'; -- HC SR04
-        WAIT FOR 256 ms; 
-        echo <= '0'; -- HC SR04 signals echo end
-
-        
-
-
-
-        WAIT FOR 10 ms; 
-
-
 
         -- simulation end (do not modify)
         ENDSIM <= '1';

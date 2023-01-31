@@ -20,22 +20,8 @@ puts "Test simulation script for ModelSim "
 set project_settings "../../project_settings.tcl"
 source $project_settings
 
-# Create new project
-vlib $modelsim_path
-
-# Compile source files
-foreach file $compile_list {
-    vcom -93 -work $modelsim_path $source_path/$file
-}
-
-# launch simulation
-vsim -lib $modelsim_path -wlf $wave_path $TB
-
-# Define signals to plot
-add wave -position end  sim:/$TB/$DUT/*
-
-# Run simulation
-run -all
+# Launch generic simulation script
+source $simu_script
 
 ### Cosmetics ###
 

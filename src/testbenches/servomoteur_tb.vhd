@@ -8,7 +8,6 @@ END ENTITY;
 ARCHITECTURE RTL OF servomoteur_TB IS
 
     -- 50MHz Clock period definition (do not modify)
-    -- CONSTANT clock_period : TIME := 1 / (50 * 10**6);
     SIGNAL clock_period : TIME := 20 * ns;
 
     -- simulation signals (do not modify)
@@ -26,7 +25,7 @@ BEGIN
     test_inst : ENTITY work.servomoteur
         PORT MAP(
             clk => CLK,
-            reset_n => RST,
+            rst_n => RST,
             position => position,
             commande => commande
         );
